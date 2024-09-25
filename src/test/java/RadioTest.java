@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class RadioTest {
 
@@ -260,5 +261,13 @@ public class RadioTest {
 
         radio.decreaseVolume(); // Меньше 0 не должно быть
         assertEquals(0, radio.getCurrentVolume());
+    }
+
+    @Test
+    void testSetStationOutOfRange() {
+        Radio radio = new Radio(20);
+        radio.setCurrentStation(15);
+
+        assertNotEquals(15, radio.getCurrentStation(), "Станция была установлена неправильно!");
     }
 }
