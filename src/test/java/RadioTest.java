@@ -268,6 +268,6 @@ public class RadioTest {
         Radio radio = new Radio(20);
         radio.setCurrentStation(15);
 
-        assertNotEquals(15, radio.getCurrentStation(), "Станция была установлена неправильно!");
+        assertEquals(15, radio.getCurrentStation(), "Станция была установлена неправильно!");
     }
 }
