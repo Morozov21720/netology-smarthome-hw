@@ -1,9 +1,66 @@
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class RadioTest {
+
+
+    @Test
+    public void testDefaultStationCount() {
+        Radio radio = new Radio();
+        assertEquals(10, radio.numberOfStations);
+    }
+
+    @Test
+    public void testCustomStationCount() {
+        Radio radio = new Radio(15);
+        assertEquals(15, radio.numberOfStations);
+
+        radio = new Radio(-5);
+        assertEquals(10, radio.numberOfStations);
+    }
+
+    @Test
+    public void testNextStationWithCustomStations() {
+        Radio radio = new Radio(5);
+        radio.setCurrentStation(4);
+        radio.nextStation();
+        assertEquals(0, radio.getCurrentStation());
+    }
+
+    @Test
+    public void testPrevStationWithCustomStations() {
+        Radio radio = new Radio(7);
+        radio.setCurrentStation(0);
+        radio.prevStation();
+        assertEquals(6, radio.getCurrentStation());
+    }
+
+    @Test
+    public void testVolumeControl() {
+        Radio radio = new Radio();
+        radio.setCurrentVolume(50);
+        assertEquals(50, radio.getCurrentVolume());
+
+        radio.increaseVolume();
+        assertEquals(51, radio.getCurrentVolume());
+
+        radio.decreaseVolume();
+        assertEquals(50, radio.getCurrentVolume());
+    }
+
+    @Test
+    public void testVolumeBoundaries() {
+        Radio radio = new Radio();
+        radio.setCurrentVolume(100);
+        radio.increaseVolume(); // Нельзя превысить 100
+        assertEquals(100, radio.getCurrentVolume());
+
+        radio.setCurrentVolume(0);
+        radio.decreaseVolume(); // Нельзя уменьшить ниже 0
+        assertEquals(0, radio.getCurrentVolume());
+    }
 
 
     @Test
@@ -204,5 +261,13 @@ public class RadioTest {
 
         radio.decreaseVolume(); // Меньше 0 не должно быть
         assertEquals(0, radio.getCurrentVolume());
+    }
+
+    @Test
+    void testSetStationOutOfRange() {
+        Radio radio = new Radio(20);
+        radio.setCurrentStation(15);
+
+        assertEquals(15, radio.getCurrentStation(), "Станция была установлена неправильно!");
     }
 }
